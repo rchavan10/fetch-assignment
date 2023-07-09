@@ -16,6 +16,13 @@ function getAlphaNumeric(name) {
 
 }
 
+function itemCalculator(items) {
+    let multiplier = Math.floor(items / 2)
+    points += multiplier * 5
+    
+}
+
+
 function totalCal(total) {
     if (total % 1 === 0) {
         points += 50;
@@ -26,6 +33,15 @@ function totalCal(total) {
     }
 }
 
+function itemDescCal(items) {
+    items.map(item => {
+        let itemDesc = item.shortDescription.trim()
+        if (itemDesc.length % 3 === 0) {
+            points += Math.ceil(item.price * 0.2);
+        }
+    });
+}
+
 app.get('/', (req, res) => {
     res.send('Hello World')
   })
@@ -34,12 +50,16 @@ app.post('/receipts/process', (req, res) => {
     points = 0;
     let retailerName = req.body.retailer;
     let totalPrice = Number(req.body.total);
+    let countItems = req.body.items.length;
+    let allItems = req.body.items
 
     getAlphaNumeric(retailerName);
     totalCal(totalPrice);
+    itemCalculator(countItems);
+    itemDescCal(allItems);
 
-    res.send('Points:' + JSON.stringify(points));
-
+    // res.send('total items:' + JSON.stringify(totalItems));
+    res.send('Points: ' + JSON.stringify(points))
     // res.send('Receipt recieved: ' + JSON.stringify(receipt));
 })  
 
