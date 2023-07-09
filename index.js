@@ -80,6 +80,7 @@ app.post('/receipts/process', (req, res) => {
     timeCal(timeOfPurcahse);
 
     const receiptResponse = {
+        points: points,
         id: uuidv4()
     }
     // res.send('total items:' + JSON.stringify(totalItems));
