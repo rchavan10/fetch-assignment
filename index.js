@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid');
+
 const express = require('express');
 const bodyParser = require('body-parser')
 const port = 3000;
@@ -77,9 +79,15 @@ app.post('/receipts/process', (req, res) => {
     oddDayCal(dateOfPurchase);
     timeCal(timeOfPurcahse);
 
+    const receiptResponse = {
+        id: uuidv4()
+    }
     // res.send('total items:' + JSON.stringify(totalItems));
-    res.send('Points: ' + JSON.stringify(points))
+    // res.send('Points: ' + points)
+    res.json(receiptResponse);
     // res.send('Receipt recieved: ' + JSON.stringify(receipt));
+
+
 })  
 
 
