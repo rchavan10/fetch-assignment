@@ -42,6 +42,21 @@ function itemDescCal(items) {
     });
 }
 
+function oddDayCal(date) {
+    const day = date.split("-")[2];
+    if (day % 2 !== 0) {
+        points += 6;
+    }
+}
+
+function timeCal(time) {
+    const [hours, minutes] = time.split(":");
+    const formattedTime = hours + minutes;
+    if (formattedTime > 1400 && formattedTime < 1600) {
+        points += 10;
+    }
+}
+
 app.get('/', (req, res) => {
     res.send('Hello World')
   })
@@ -51,12 +66,16 @@ app.post('/receipts/process', (req, res) => {
     let retailerName = req.body.retailer;
     let totalPrice = Number(req.body.total);
     let countItems = req.body.items.length;
-    let allItems = req.body.items
+    let allItems = req.body.items;
+    let dateOfPurchase = req.body.purchaseDate;
+    let timeOfPurcahse = req.body.purchaseTime;
 
     getAlphaNumeric(retailerName);
     totalCal(totalPrice);
     itemCalculator(countItems);
     itemDescCal(allItems);
+    oddDayCal(dateOfPurchase);
+    timeCal(timeOfPurcahse);
 
     // res.send('total items:' + JSON.stringify(totalItems));
     res.send('Points: ' + JSON.stringify(points))
