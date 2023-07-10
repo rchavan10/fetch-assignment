@@ -11,21 +11,21 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 let points = 0;
 
-function getAlphaNumeric(name) {
+const getAlphaNumeric = (name) => {
     const alphaNumeric = /[A-Za-z0-9]/g;
     const validChars = name.match(alphaNumeric); 
     points += validChars?.length ?? 0;
 
 }
 
-function itemCalculator(items) {
+const itemCalculator = (items) => {
     let multiplier = Math.floor(items / 2)
     points += multiplier * 5
     
 }
 
 
-function totalCal(total) {
+const totalCal = (total) => {
     if (total % 1 === 0) {
         points += 50;
     }
@@ -35,7 +35,7 @@ function totalCal(total) {
     }
 }
 
-function itemDescCal(items) {
+const itemDescCal = (items) => {
     items.map(item => {
         let itemDesc = item.shortDescription.trim()
         if (itemDesc.length % 3 === 0) {
@@ -44,14 +44,14 @@ function itemDescCal(items) {
     });
 }
 
-function oddDayCal(date) {
+const oddDayCal = (date) => {
     const day = date.split("-")[2];
     if (day % 2 !== 0) {
         points += 6;
     }
 }
 
-function timeCal(time) {
+const timeCal = (time) => {
     const [hours, minutes] = time.split(":");
     const formattedTime = hours + minutes;
     if (formattedTime > 1400 && formattedTime < 1600) {
